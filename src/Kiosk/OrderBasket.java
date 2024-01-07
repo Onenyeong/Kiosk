@@ -59,22 +59,54 @@ public class OrderBasket {
 
     public void showOrderBasket() {
 
+        /* Edit by YuJin */
 
-        int finalQuantity = 0;
-        int finalPrice = 0;
-        // 값을 빼고, 새로운 객체를 생성, for문 돌때마다 add로 값을 채워줌.
-        for (int i = 0; i < orderBaskets.size(); i++) {      // 함수화 (orderBasket에서 정의했어야)
-            for (int j = i + 1; j < orderBaskets.size(); j++) {     // map,list(포인터), 어떤방식 사용할지 키워드 묻기
-                // i와 j의 중복되는 위치의 이름을 어떻게 반환하지?
-                if (orderBaskets.get(i).menuName.equals(orderBaskets.get(j).menuName)) {
-                    finalQuantity = orderBaskets.get(i).quantity + orderBaskets.get(j).quantity;
-                    finalPrice = orderBaskets.get(i).price + orderBaskets.get(j).price; // 메뉴이름은 변경할필요가없음
-                }
-                continue;
+        // 주문 내역을 메뉴 이름을 기준으로 그룹화하고, 수량과 가격을 합산
+
+        // key를 메뉴 이름으로 하고 value에 OrderBasket을 넣는다.
+        Map<String, OrderBasket> consolidatedOrders = new HashMap<>();
+
+        // 메뉴를 반복문으로 순회한다.
+        for (OrderBasket basket : orderBaskets) {
+            // 만약 map에 메뉴가 있으면 (중복된 메뉴라면) 수량과 가격을 합산한다.
+            if (consolidatedOrders.containsKey(basket.menuName)) {
+                OrderBasket existingBasket = consolidatedOrders.get(basket.menuName);
+                existingBasket.quantity += basket.quantity;
+                existingBasket.price += basket.price;
+            }
+
+            // 그렇지 않다면 map에 메뉴를 추가한다.
+            else {
+                consolidatedOrders.put(basket.menuName, new OrderBasket(basket.menuNumber, basket.menuName, basket.menuDesc, basket.price, basket.quantity));
             }
         }
-        setQuantity(finalQuantity);
-        setPrice(finalPrice);
+
+        // 최종 주문 내역 출력
+        int index = 1;
+        for (OrderBasket basket : consolidatedOrders.values()) {
+            System.out.println(index + ". " + basket.menuName + ", " + basket.menuDesc + ", " + basket.quantity + ", " + (basket.price * basket.quantity));
+            index++;
+        }
+
+
+        /* ======================================= */
+
+
+//        int finalQuantity = 0;
+//        int finalPrice = 0;
+//        // 값을 빼고, 새로운 객체를 생성, for문 돌때마다 add로 값을 채워줌.
+//        for (int i = 0; i < orderBaskets.size(); i++) {      // 함수화 (orderBasket에서 정의했어야)
+//            for (int j = i + 1; j < orderBaskets.size(); j++) {     // map,list(포인터), 어떤방식 사용할지 키워드 묻기
+//                // i와 j의 중복되는 위치의 이름을 어떻게 반환하지?
+//                if (orderBaskets.get(i).menuName.equals(orderBaskets.get(j).menuName)) {
+//                    finalQuantity = orderBaskets.get(i).quantity + orderBaskets.get(j).quantity;
+//                    finalPrice = orderBaskets.get(i).price + orderBaskets.get(j).price; // 메뉴이름은 변경할필요가없음
+//                }
+//                continue;
+//            }
+//        }
+//        setQuantity(finalQuantity);
+//        setPrice(finalPrice);
 
         // 순회하면서 같은 이름 || 같은 설명이 있다면 quantity 갖고있는만큼 더해줘
         // 리스트를 하나더 클론해서..비교
