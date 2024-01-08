@@ -1,15 +1,15 @@
 package Kiosk;
 
 public class Hamburger extends Menu {
-    public int price;
+    public int menuPrice;
 
     public int getPrice() {
-        return price;
+        return menuPrice;
     }
 
-    public Hamburger(int menuNumber, String menuName, String menuDesc, int price) {
+    public Hamburger(int menuNumber, String menuName, String menuDesc, int menuPrice) {
         super(menuNumber, menuName, menuDesc);
-        this.price = price;
+        this.menuPrice = menuPrice;
     }
 
     public void getMenuToString() {

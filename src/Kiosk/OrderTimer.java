@@ -14,13 +14,18 @@ public class OrderTimer {
     public void timerRun() {
         Menu menu = new Menu();
         Timer timer = new Timer();      // 스레드 돌리는거라서 조심해서써야
+        int waitingNumber = 1;
+        System.out.println("대기번호는"+ waitingNumber + "번 입니다");
         TimerTask timerTask = new TimerTask() {
+
             @Override
             public void run() {
+
                 if (count >= 1) {
                     System.out.println(count + "초후 메인화면으로 이동합니다");
                     count--;
                 } else {
+                    System.out.println("대기번호는"+ waitingNumber + "번 입니다");
                     timer.cancel();
                     menu.getReturnMenuCategoryView();
                 }

@@ -8,7 +8,7 @@ public class Menu {
     private int menuNumber;
     private String menuName;
     private String menuDesc;
-    private int price;
+    private int menuPrice;
     List<Menu> menu = new ArrayList<>();
 
 
@@ -37,7 +37,7 @@ public class Menu {
 
 
     public int getPrice() {
-        return price;
+        return menuPrice;
     }
 
 
@@ -47,11 +47,11 @@ public class Menu {
         this.menuDesc = menuDesc;
     }
 
-    public Menu(int menuNumber, String menuName, String menuDesc, int price) {
+    public Menu(int menuNumber, String menuName, String menuDesc, int menuPrice) {
         this.menuNumber = menuNumber;
         this.menuName = menuName;
         this.menuDesc = menuDesc;
-        this.price = price;
+        this.menuPrice = menuPrice;
     }
 
     public Menu() {
@@ -59,16 +59,11 @@ public class Menu {
     }
 
 
-    public void menuAdd() {
+    public void addMenuView() {
         menuCategoryWelcomeView();
-        menu.add(new Menu(1, "Burgers", "햄버거"));
-        menu.add(new Menu(2, "Pizza", "피자"));
-        menu.add(new Menu(3, "Chicken", "치킨"));
-        menu.add(new Menu(4, "Drinks", "음료수"));
-        menu.add(new Menu(5, "OrderCheck", "주문확인 및 주문진행"));
-        menu.add(new Menu(6, "Cancel", "주문취소"));
-        menu.add(new Menu(7, "Clear", "모두비우기"));
-
+        if (menu.isEmpty()){
+            addMenu();
+        }
         menuCategoryView();
         menuCategoryEndView();
     }
@@ -81,23 +76,33 @@ public class Menu {
             int inputMenuNumber = getMenuNumberFromUsr();
             switch (inputMenuNumber) {
                 case 1:
-                    addBurger();
+                    if (hamburger.isEmpty()){
+                    addBurger();}
                     // 케이스에 두번 접근해야 할 경우 버거의 종류를 두번 add하기떄문에 예외처리 필요
                     hamburgerMenuView();
                     order.getHamburgerAndOrder();
                     // 뒤로가기 예외처리 (구매를 하고싶지 않을경우)
                     break;
                 case 2:
-                    addPizza();
+                    if (pizza.isEmpty()){
+                        addPizza();}
+
                     pizzaMenuView();
+                    order.getPizzaAndOrder();
                     break;
                 case 3:
-                    addChicken();
+                    if (chicken.isEmpty()){
+                        addChicken();}
+
                     chickenMenuView();
+                    order.getChickenAndOrder();
                     break;
                 case 4:
-                    addDrink();
+                    if (drink.isEmpty()){
+                        addDrink();}
+
                     drinkMenuView();
+                    order.getDrinkAndOrder();
                     break;
                 case 5:
                     orderBasket.showOrderBasket();
@@ -167,6 +172,7 @@ public class Menu {
         }
     }
 
+
     public void chickenMenuView() {
         for (Chicken item : chicken) {
             item.getMenuToString();
@@ -180,6 +186,7 @@ public class Menu {
     }
 
     public void getReturnMenuCategoryView() {
+        if (menu.isEmpty())addMenu();
         menuCategoryWelcomeView();
         menuCategoryView();
         menuCategoryEndView();
@@ -195,10 +202,10 @@ public class Menu {
 
     // String 으로 변환 작업.
     public void addDrink() {
-        drink.add(new Drink(1, "코카콜라제로", "불고기에 소스만 바른 버거", 2000));
-        drink.add(new Drink(2, "펩시제로", "새우만 넣은 버거", 1800));
-        drink.add(new Drink(3, "환타", "꽤나 매운 버거", 1700));
-        drink.add(new Drink(4, "사이다", "소고기 들어간 버거", 2300));
+        drink.add(new Drink(1, "코카콜라제로", "음료계의 근본", 2000));
+        drink.add(new Drink(2, "펩시제로", "코카콜라의 대항마", 2000));
+        drink.add(new Drink(3, "환타", "톡쏘는 오렌지", 1700));
+        drink.add(new Drink(4, "사이다", "청량함과 시원함을 동시에", 1800));
 
     }
 
@@ -221,6 +228,16 @@ public class Menu {
         hamburger.add(new Hamburger(3, "맥스파이시 상하이버거", "꽤나 매운 버거", 5500));
         hamburger.add(new Hamburger(4, "빅맥", "소고기 들어간 버거", 6400));
         hamburger.add(new Hamburger(5, "쿼터 파운더 치즈", "치즈 듬뿍 들어간 버거", 7000));
+
+    }
+    public void addMenu(){
+        menu.add(new Menu(1, "Burgers", "햄버거"));
+        menu.add(new Menu(2, "Pizza", "피자"));
+        menu.add(new Menu(3, "Chicken", "치킨"));
+        menu.add(new Menu(4, "Drinks", "음료수"));
+        menu.add(new Menu(5, "OrderCheck", "주문확인 및 주문진행"));
+        menu.add(new Menu(6, "Cancel", "주문취소"));
+        menu.add(new Menu(7, "Clear", "모두비우기"));
 
     }
 

@@ -11,7 +11,7 @@ public class Kiosk {
 
         // 메뉴 추가 메서드
         Menu menu = new Menu();
-        menu.menuAdd();
+        menu.addMenuView();
         // 카테고리 선택 메서드
         // 상품번호,수량을 입력받는 메서드
         // 입력받은 내용 넣기
